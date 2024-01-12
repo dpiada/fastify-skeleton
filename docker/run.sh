@@ -11,10 +11,5 @@ else
     exit 1
 fi
 
-# Wait for the database service to be up and running
-#wait-for-it.sh $DB_SERVICE -t 
-#wait-for-it.sh $MONGO_HOST:$MONGO_PORT -t
-#wait-for-it.sh $RABBIT_HOSTNAME:$RABBIT_PORT -t
-
 echo "Running npm run $npm_cmd"
 npm run $npm_cmd

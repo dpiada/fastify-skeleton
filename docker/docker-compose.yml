@@ -1,99 +1,26 @@
 version: '3.7'
 
 volumes:
-    database-data-a:
-        driver: local
-        name: userservice-database-data-a
     database-mongo:
         driver: local
         name: mongo-database-data
-    rabbit-data:
-        driver: local
-        name: rabbit-data
 
 networks: 
     application:
         driver: bridge
 
-
 services:
-
 ## Backend ##############################################
-    backend:
-        image: backend
+    fastify-skeleton-server:
+        image: fastify-skeleton-server
         build:
             context: ../
             dockerfile: docker/Dockerfile
             target: local_dev
-        environment:
-            NODE_ENV: $NODE_ENV
-            LOG_LEVEL: $LOG_LEVEL
-            LOG_PRETTY_PRINT: "true"
-            DB_SERVICE: 'db_manager_database:5432'
-            DB_USER: ${DB_USER?err}
-            DB_PASSWORD: ${DB_PASSWORD?err}
-            DB_NAME: ${DB_NAME?err}
-            MONGO_HOST: ${MONGO_HOST?err}
-            MONGO_PORT: ${MONGO_PORT?err}
-            MONGO_DB_NAME: ${MONGO_DB_NAME?err}
-            MONGO_USER: ${MONGO_USER?err}
-            MONGO_PW: ${MONGO_PW?err}
-            RABBIT_HOSTNAME: ${RABBIT_HOSTNAME?err}
-            RABBIT_PORT: ${RABBIT_PORT?err}
-            RABBIT_ROUTING_KEY: ${RABBIT_ROUTING_KEY?err} 
-            RABBIT_QUEUE: ${RABBIT_QUEUE?err}
-            RABBIT_MQTT_EXCHANGE_NAME: ${RABBIT_MQTT_EXCHANGE_NAME?err} 
-            PUSH_NOTIFICATION_PLATFORM_ARN: ${PUSH_NOTIFICATION_PLATFORM_ARN}
-            ACCESS_ID: ${ACCESS_ID}
-            SECRET_KEY: ${SECRET_KEY}
-            AWS_REGION: ${AWS_REGION}
-            JWT_SECRET: ${JWT_SECRET}
         volumes:
         - ../:/home/node/workdir
         ports:
             - 3000:3000
         networks:
             - application
-        container_name: notification-manager
-
-## Database ##############################################
-    postgres:
-        image: postgres:13.2
-        volumes:
-            - database-data-a:/var/lib/postgresql/data/
-        environment:
-            POSTGRES_USER: ${DB_USER?err}
-            POSTGRES_PASSWORD: ${DB_PASSWORD?err}
-            POSTGRES_DB: ${DB_NAME?err}
-        container_name: db_manager_database
-        ports:
-            - "5432:5432"
-        networks:
-            - application
-            
-    mongodb:
-        image: mongo:6.0
-        ports:
-           - 27017:27017
-        volumes:
-           - database-mongo:/var/lib/mongo/data/db
-        environment:
-           - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER?err}
-           - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PW?err}
-        container_name: mongo-database
-        networks:
-           - application
-
-## RabbitMQ ################################################
-    rabbitmq: 
-        image: rabbitmq:3.10-management
-        volumes:
-            - rabbit-data:/data
-        ports:
-            - 5672:5672
-            - 15672:15672
-            - 1883:1883
-        networks:
-            - application
-        hostname: rabbit
-        container_name: rabbitmq-test
+        container_name: fastify-skeleton-server

@@ -1,18 +1,19 @@
-'use strict';
-
-const { deployment } = require('./server/server');
+const { buildFastify } = require('./server/server');
+const { writeApiDoc } = require('./lib/helpers/documantation-scripts');
 
 try {
+  (async () => {
+    const fastify = await buildFastify();
 
-    const serverPromise = deployment(true);
+    await fastify.listen({
+      port: fastify.config.PORT,
+      host: fastify.config.HOST,
+    });
 
-    (async () => {
+    await writeApiDoc(fastify);
 
-        const { fastify } = await serverPromise;
-
-        //Here it's possibile create instances foor runner
-    })();
+  })();
 } catch (err) {
-    console.log(err)
-    process.exit(1)
+  console.log(err);
+  process.exit(1);
 }

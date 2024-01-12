@@ -1,0 +1,23 @@
+swagger: "2.0"
+info:
+  title: fastify-skeleton
+  description: skeleton for use fastify in a project
+  version: 1.0.0
+definitions: {}
+paths:
+  /v1/dummy:
+    get:
+      description: It's only a dummy route
+      tags:
+        - dummy
+      responses:
+        "200":
+          description: Default Response
+  /v1/health:
+    get:
+      description: Get health status
+      tags:
+        - health
+      responses:
+        "200":
+          description: Default Response
