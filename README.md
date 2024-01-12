@@ -23,7 +23,6 @@ Following there is a scaffolding of the project.
 ├── swagger-api.yaml
 └── test
 ```
-
 - **docker**: It contains docker-compose, docker file and scripts useful to run the project
 - **index**: It's the start point of the web server
 - **lib**: It's the core of this web server
@@ -48,8 +47,21 @@ Execute these steps.
 
 ## Run tests
 With docker container in running.
-
 launch `npm run test` or `npm run test-coverage`
+
+## Start modes:
+There are three start modes:
+
+- *local_dev*: for local develop and it uses nodemon to auto restart 
+- *release*: start without auto-restart
+- *test*: it runs tests
+
+```
+    build:
+        context: ../
+        dockerfile: docker/Dockerfile
+        target: local_dev
+```
 
 ## Route documentation
 In script utils there is a script that run swagger create commands.

@@ -1,14 +1,9 @@
 version: '3.7'
 
-volumes:
-    database-mongo:
-        driver: local
-        name: mongo-database-data
-
 networks: 
     application:
         driver: bridge
-
+        
 services:
 ## Backend ##############################################
     fastify-skeleton-server:

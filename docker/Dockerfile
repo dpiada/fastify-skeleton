@@ -8,6 +8,8 @@ USER node:node
 
 COPY docker/run.sh /usr/local/bin/run.sh
 
+EXPOSE 3000
+
 FROM base as local_dev
 
 CMD ["run.sh", "development"]
